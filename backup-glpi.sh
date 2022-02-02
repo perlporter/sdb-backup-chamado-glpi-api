@@ -67,7 +67,7 @@ fi
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))" \t## Backup iniciado ##" >> $LOGFILE;
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tCriando SQL $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql ..." >> $LOGFILE;
 
-mysqldump --no-tablespaces -h$DBHOST -u$DBUSER -p$DBPASS $DBNAME > $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql;
+mysqldump --no-tablespaces -h$DBHOST -u$DBUSER -p$DBPASS $DBNAME > $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql 2>/dev/null;
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tbackup: "$(du -sh $GLPISIZE)".. em $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.tar.bz2 ..." >> $LOGFILE;
 
