@@ -8,7 +8,7 @@
 
 GLPI_URL_API='http://glpi.ramenzoni.lan'
 GLPI_APP_TOKEN='XzsNokTVYzurikcIkEefWTrsGtmvJvbRZ1yH6Mec';
-GLPI_AUTH='Basic Z2xwaTpzY29ocDAw';
+GLPI_AUTH=$(cat auth.txt)
 GLPI_USER_TOKEN='wendell';
 GLPI_ID_ENTIDADE=1;						#ID da entidade de abertura do chamado
 GLPI_ID_CATEGORIA=148;						#ID da categoria
