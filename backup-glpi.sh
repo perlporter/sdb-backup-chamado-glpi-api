@@ -32,6 +32,7 @@ GLPI_FILE_DIR='/usr/local/www/glpi/files';	#GLPI-Files
 #Buscar dados de acesso do Banco de Dados no arquivo de config_db do GLPI RPM Remi Collet
 
 DBCONFIG='/usr/local/www/glpi/config/config_db.php';
+DBHOST=`grep "dbhost" $DBCONFIG | cut -d "'" -f 2`;
 DBUSER=`grep "dbuser" $DBCONFIG | cut -d "'" -f 2`;
 DBPASS=`grep "dbpassword" $DBCONFIG | cut -d "'" -f 2`;
 DBNAME=`grep "dbdefault" $DBCONFIG | cut -d "'" -f 2`;
@@ -46,7 +47,7 @@ DBNAME=`grep "dbdefault" $DBCONFIG | cut -d "'" -f 2`;
 
 TAMANHO_DIR_GLPI_APP=true
 TAMANHO_DIR_GLPI_FILE=true
-TAMANHO_DIR_GLPI_LOG=true
+# TAMANHO_DIR_GLPI_LOG=true
 TAMANHO_DIR_BACKUP_ANTES=true
 TAMANHO_DIR_BACKUP_APOS=true
 STATUS_DISCOS=true
@@ -66,7 +67,7 @@ fi
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))" \t## Backup iniciado ##" >> $LOGFILE;
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tCriando SQL $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql ..." >> $LOGFILE;
 
-mysqldump --no-tablespaces -u$DBUSER -p$DBPASS $DBNAME > $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql;
+mysqldump --no-tablespaces -h$DBHOST -u$DBUSER -p$DBPASS $DBNAME > $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.sql;
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tbackup: "$(du -sh $GLPISIZE)".. em $BACKUP_DIR_SQL/glpi-sqldump.$DATE_BASE.tar.bz2 ..." >> $LOGFILE;
 
