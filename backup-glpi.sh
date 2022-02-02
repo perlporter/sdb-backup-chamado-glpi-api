@@ -3,10 +3,12 @@
 #Autor = Servicedesk Brasil | Danilo Santos, Danilo Motta
 #Versao = 2.1 - Data atualizacao = 05-MAI-21
 #API GLPI Acessos
+#Ajustes para funcionar no FreeBSD
+#Autor = Wendell Borges 
 
-GLPI_URL_API='https://travessia.glpibrasil.com.br'
-GLPI_APP_TOKEN='coloqueoseu';
-GLPI_USER_TOKEN='coloqueoseu';
+GLPI_URL_API='http://glpi.ramenzoni.lan'
+GLPI_APP_TOKEN='XzsNokTVYzurikcIkEefWTrsGtmvJvbRZ1yH6Mec';
+GLPI_USER_TOKEN='wendell';
 GLPI_ID_ENTIDADE=0;						#ID da entidade de abertura do chamado
 GLPI_ID_CATEGORIA=148;						#ID da categoria
 GLPI_ID_TIPO=2;							#Tipo de chamado [1=Incidente, 2=Requisição]
@@ -19,17 +21,17 @@ BACKUP_DIR_APP='/backup/glpi/app';				#Diretorio de destino Backup Aplicacao
 BACKUP_DIR_FILE='/backup/glpi/app';				#Diretorio de destino Backup Files/Anexos
 BACKUP_DIR_LOG='/backup/glpi/app';				#Diretorio de destino Backup Logs
 
-LOGFILE='/var/log/glpi/backup.log';				#Saida do LOG
+LOGFILE='/backup/glpi/backup.log';				#Saida do LOG
 
 #Diretorios do GLPi - Aplicacao, Files/Anexos e LOG
  
-GLPI_APP_DIR='/usr/share/glpi';					#Diretorio da Aplicação do GLPI
-GLPI_FILE_DIR='/var/lib/glpi';					#GLPI-Files
-GLPI_LOG_DIR='/var/log/glpi';					#GLPI-Logs
+GLPI_APP_DIR='/usr/local/www/glpi';					#Diretorio da Aplicação do GLPI
+GLPI_FILE_DIR='/usr/local/www/glpi/files';	#GLPI-Files
+# GLPI_LOG_DIR='/var/log/glpi';					#GLPI-Logs
 
 #Buscar dados de acesso do Banco de Dados no arquivo de config_db do GLPI RPM Remi Collet
 
-DBCONFIG='/etc/glpi/config_db.php';
+DBCONFIG='/usr/local/www/glpi/config/config_db.php';
 DBUSER=`grep "dbuser" $DBCONFIG | cut -d "'" -f 2`;
 DBPASS=`grep "dbpassword" $DBCONFIG | cut -d "'" -f 2`;
 DBNAME=`grep "dbdefault" $DBCONFIG | cut -d "'" -f 2`;
@@ -87,7 +89,7 @@ tar -cjPf $BACKUP_DIR_FILE/glpi_lib.tar.bz2 $GLPI_FILE_DIR >> $LOGFILE;
 rm -f $BACKUP_DIR_LOG/glpi_log.tar.bz2
 
 #Novo Backup_Files/Anexo
-tar -cjPf $BACKUP_DIR_LOG/glpi_log.tar.bz2 $GLPI_LOG_DIR >> $LOGFILE;
+# tar -cjPf $BACKUP_DIR_LOG/glpi_log.tar.bz2 $GLPI_LOG_DIR >> $LOGFILE;
 
 #Backup Realizado
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tConcluido..." >> $LOGFILE;
@@ -118,9 +120,9 @@ fi
 if [ "$TAMANHO_DIR_GLPI_FILE" = true ] ; then
     GLPI_DESCRICAO="${GLPI_DESCRICAO}<p>"$(du -sh $GLPI_FILE_DIR)" - Tamanho da FILE</p>";
 fi
-if [ "$TAMANHO_DIR_GLPI_LOG" = true ] ; then
-    GLPI_DESCRICAO="${GLPI_DESCRICAO}<p>"$(du -sh $GLPI_LOG_DIR)" - Tamanho da LOG</p>";
-fi
+# if [ "$TAMANHO_DIR_GLPI_LOG" = true ] ; then
+#     GLPI_DESCRICAO="${GLPI_DESCRICAO}<p>"$(du -sh $GLPI_LOG_DIR)" - Tamanho da LOG</p>";
+# fi
 if [ "$STATUS_DISCOS" = true ] ; then
     GLPI_DESCRICAO="${GLPI_DESCRICAO}<br/><strong><p>Status do disco:</p></strong><br/><p>"$(df -h '/')"</p>";
 fi
