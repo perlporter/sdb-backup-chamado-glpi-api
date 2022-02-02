@@ -8,8 +8,9 @@
 
 GLPI_URL_API='http://glpi.ramenzoni.lan'
 GLPI_APP_TOKEN='XzsNokTVYzurikcIkEefWTrsGtmvJvbRZ1yH6Mec';
+GLPI_AUTH='Basic Z2xwaTpzY29ocDAw';
 GLPI_USER_TOKEN='wendell';
-GLPI_ID_ENTIDADE=0;						#ID da entidade de abertura do chamado
+GLPI_ID_ENTIDADE=1;						#ID da entidade de abertura do chamado
 GLPI_ID_CATEGORIA=148;						#ID da categoria
 GLPI_ID_TIPO=2;							#Tipo de chamado [1=Incidente, 2=Requisição]
 GLPI_ID_ORIGEM_REQUISICAO=8;					#Origem da requisição, é de onde veio o chamado(Exemplo '1' é o Helpdesk) 
@@ -21,7 +22,7 @@ BACKUP_DIR_APP='/backup/glpi/app';				#Diretorio de destino Backup Aplicacao
 BACKUP_DIR_FILE='/backup/glpi/app';				#Diretorio de destino Backup Files/Anexos
 BACKUP_DIR_LOG='/backup/glpi/app';				#Diretorio de destino Backup Logs
 
-LOGFILE='/backup/glpi/backup.log';				#Saida do LOG
+LOGFILE='/backup/glpi/log/backup.log';				#Saida do LOG
 
 #Diretorios do GLPi - Aplicacao, Files/Anexos e LOG
  
@@ -101,7 +102,7 @@ echo -e $(echo $(date +"$LOG_TIME_FORMAT"))" \t## Backup realizado ##" >> $LOGFI
 #API criar sessao
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tAbrir sessão" >> $LOGFILE;
-SESSION_TOKEN=$(curl -s -X POST -H 'Content-Type: application/json' -H "app-token: $GLPI_APP_TOKEN" "$GLPI_URL_API/apirest.php/initSession" --data "{\"user_token\":\"$GLPI_USER_TOKEN\"}" | grep -o -P '(?<=:").*(?=")')
+SESSION_TOKEN=$(curl -s --request GET --url "$GLPI_URL_API/apirest.php/initSession" --header "Authorization: $GLPI_AUTH" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN" | /usr/local/bin/grep -o -P '(?<=:").*(?=")')
 
 #Titulo e Descrição do chamado
 
