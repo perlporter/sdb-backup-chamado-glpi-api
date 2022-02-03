@@ -9,10 +9,10 @@
 GLPI_URL_API='http://glpi.ramenzoni.lan'
 GLPI_APP_TOKEN='YCl9aTYZHQHHr9E9qD00pZDxLxV0BfIRq24TLWL3';
 GLPI_USER_TOKEN='user_token ZcczEcOCebMJfxLG59UlbkR3NM5YtbHuspARJOwU';
-GLPI_ID_ENTIDADE=1;						#ID da entidade de abertura do chamado
-GLPI_ID_CATEGORIA=1;						#ID da categoria
-GLPI_ID_TIPO=2;							#Tipo de chamado [1=Incidente, 2=Requisição]
-GLPI_ID_ORIGEM_REQUISICAO=8;					#Origem da requisição, é de onde veio o chamado(Exemplo '1' é o Helpdesk) 
+GLPI_ID_ENTIDADE=1;						  #ID da entidade de abertura do chamado
+GLPI_ID_CATEGORIA=1;						#ID da categoria [1=Infraestrutura]
+GLPI_ID_TIPO=2;							    #Tipo de chamado [1=Incidente, 2=Requisição]
+GLPI_ID_ORIGEM_REQUISICAO=2;		#Origem da requisição, é de onde veio o chamado(Exemplo '1' é o Helpdesk) 
 
 #Diretorio do Backup SQL, Aplicacao, Files/Anexos e LOG
  
