@@ -8,10 +8,9 @@
 
 GLPI_URL_API='http://glpi.ramenzoni.lan'
 GLPI_APP_TOKEN='YCl9aTYZHQHHr9E9qD00pZDxLxV0BfIRq24TLWL3';
-GLPI_AUTH=$(cat .credentials)
-GLPI_USER_TOKEN='api';
+GLPI_USER_TOKEN='user_token ZcczEcOCebMJfxLG59UlbkR3NM5YtbHuspARJOwU';
 GLPI_ID_ENTIDADE=1;						#ID da entidade de abertura do chamado
-GLPI_ID_CATEGORIA=148;						#ID da categoria
+GLPI_ID_CATEGORIA=1;						#ID da categoria
 GLPI_ID_TIPO=2;							#Tipo de chamado [1=Incidente, 2=Requisição]
 GLPI_ID_ORIGEM_REQUISICAO=8;					#Origem da requisição, é de onde veio o chamado(Exemplo '1' é o Helpdesk) 
 
@@ -102,7 +101,7 @@ echo -e $(echo $(date +"$LOG_TIME_FORMAT"))" \t## Backup realizado ##" >> $LOGFI
 #API criar sessao
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tAbrir sessão" >> $LOGFILE;
-SESSION_TOKEN=$(curl -s --request GET --url "$GLPI_URL_API/apirest.php/initSession" --header "Authorization: $GLPI_AUTH" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN" | /usr/local/bin/grep -o -P '(?<=:").*(?=")')
+SESSION_TOKEN=$(curl -s --request GET --url "$GLPI_URL_API/apirest.php/initSession" --header "Authorization: $GLPI_USER_TOKEN" --header "app-token: $GLPI_APP_TOKEN" | /usr/local/bin/grep -o -P '(?<=:").*(?=")')
 
 #Titulo e Descrição do chamado
 
@@ -130,11 +129,11 @@ if [ "$STATUS_DISCOS" = true ] ; then
 fi
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tCriar chamado" >> $LOGFILE;
-echo -e $(curl -s --request POST --url $GLPI_URL_API/apirest.php/ticket/ --header "Authorization: $GLPI_AUTH" --header "Content-Type: application/json" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN" --data "{\"input\": { \"entities_id\": $GLPI_ID_ENTIDADE, \"type\": $GLPI_ID_TIPO, \"itilcategories_id\": $GLPI_ID_CATEGORIA, \"requesttypes_id\": $GLPI_ID_ORIGEM_REQUISICAO, \"name\": \"$GLPI_TITLE\", \"content\": \"$(echo $GLPI_DESCRICAO)\"}}") >> $LOGFILE;
+echo -e $(curl -s --request POST --url $GLPI_URL_API/apirest.php/ticket/ --header "Authorization: $GLPI_USER_TOKEN" --header "Content-Type: application/json" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --data "{\"input\": { \"entities_id\": $GLPI_ID_ENTIDADE, \"type\": $GLPI_ID_TIPO, \"itilcategories_id\": $GLPI_ID_CATEGORIA, \"requesttypes_id\": $GLPI_ID_ORIGEM_REQUISICAO, \"name\": \"$GLPI_TITLE\", \"content\": \"$(echo $GLPI_DESCRICAO)\"}}") >> $LOGFILE;
 
 #API Encerrar sessão
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tEncerrar sessão" >> $LOGFILE;
-echo -e $(curl -s --request GET --url $GLPI_URL_API/apirest.php/killSession --header "Authorization: $GLPI_AUTH" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN") >> $LOGFILE;
+echo -e $(curl -s --request GET --url $GLPI_URL_API/apirest.php/killSession --header "Authorization: $GLPI_USER_TOKEN" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN") >> $LOGFILE;
 
 #Backup e Chamado Concluido
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tBackup e Chamado Concluido..." >> $LOGFILE;
