@@ -7,7 +7,7 @@
 #Autor = Wendell Borges 
 
 GLPI_URL_API='http://glpi.ramenzoni.lan'
-GLPI_APP_TOKEN='XzsNokTVYzurikcIkEefWTrsGtmvJvbRZ1yH6Mec';
+GLPI_APP_TOKEN='YCl9aTYZHQHHr9E9qD00pZDxLxV0BfIRq24TLWL3';
 GLPI_AUTH=$(cat .credentials)
 GLPI_USER_TOKEN='api';
 GLPI_ID_ENTIDADE=1;						#ID da entidade de abertura do chamado
