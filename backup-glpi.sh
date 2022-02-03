@@ -131,11 +131,11 @@ fi
 
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tCriar chamado" >> $LOGFILE;
 
-echo -e $(curl --request POST --url $GLPI_URL_API/apirest.php/ticket/ --header "Authorization: $GLPI_AUTH" --header "Content-Type: application/json" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN" --data "{\"input\": { \"entities_id\": $GLPI_ID_ENTIDADE, \"type\": $GLPI_ID_TIPO, \"itilcategories_id\": $GLPI_ID_CATEGORIA, \"requesttypes_id\": $GLPI_ID_ORIGEM_REQUISICAO, \"name\": \"$GLPI_TITLE\", \"content\": \"$(echo $GLPI_DESCRICAO)\"}}") >> $LOGFILE;
+echo -e $(curl -s --request POST --url $GLPI_URL_API/apirest.php/ticket/ --header "Authorization: $GLPI_AUTH" --header "Content-Type: application/json" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN" --data "{\"input\": { \"entities_id\": $GLPI_ID_ENTIDADE, \"type\": $GLPI_ID_TIPO, \"itilcategories_id\": $GLPI_ID_CATEGORIA, \"requesttypes_id\": $GLPI_ID_ORIGEM_REQUISICAO, \"name\": \"$GLPI_TITLE\", \"content\": \"$(echo $GLPI_DESCRICAO)\"}}") >> $LOGFILE;
 
 #API Encerrar sessão
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tEncerrar sessão" >> $LOGFILE;
-echo -e $(curl --request GET --url $GLPI_URL_APP/apirest.php/killSession --header "Authorization: $GLPI_AUTH" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN") >> $LOGFILE;
+echo -e $(curl -s --request GET --url $GLPI_URL_APP/apirest.php/killSession --header "Authorization: $GLPI_AUTH" --header "Session-Token: $SESSION_TOKEN" --header "app-token: $GLPI_APP_TOKEN" --header "user_token: $GLPI_USER_TOKEN") >> $LOGFILE;
 
 #Backup e Chamado Concluido
 echo -e $(echo $(date +"$LOG_TIME_FORMAT"))"  \tBackup e Chamado Concluido..." >> $LOGFILE;
